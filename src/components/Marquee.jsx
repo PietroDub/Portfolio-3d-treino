@@ -1,4 +1,3 @@
-import { ComponentPropsWithoutRef } from "react"
 import { twMerge } from "tailwind-merge"
 
 export function Marquee({
@@ -14,7 +13,7 @@ export function Marquee({
     <div
       {...props}
       className={twMerge(
-        'group flex [gap:var(--gap)] overflow-hidden p-2 [--duration:40s] [--gap:1rem] ${ vertical ? "flex-col" : "flex-row"}',
+        `group flex [gap:var(--gap)] overflow-hidden p-2 [--duration:40s] [--gap:1rem] ${ vertical ? "flex-col"  : "flex-row" }`,
         className
       )}
     >
@@ -25,8 +24,8 @@ export function Marquee({
             key={i}
             className={twMerge("flex shrink-0 justify-around [gap:var(--gap)]",
                 vertical 
-                ? "animate-marquee flex-row"
-                : "animate-marquee-vertical flex-col",
+                ? "animate-marquee-vertical flex-col"
+                : "animate-marquee flex-row",
                 pauseOnHover && "group-hover:[animation-play-state:paused]",
                 reverse && "[animation-direction:reverse]",
              {
