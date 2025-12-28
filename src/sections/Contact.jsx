@@ -1,18 +1,42 @@
 import React, { useState } from 'react'
+import emailjs from "@emailjs/browser"
+import Alert from '../components/Alert'
 
 const Contact = () => {
     const [formData, setFormData] = useState({
          name: "", 
          email: "",
          message: ""})
+
+         const [isLoading, setIsLoading] = useState(false)
+
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name] : e.target.value })
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
+
+        try{
+            await emailjs.send("service_zgkz16b", "template_gdcagcy", {
+            from_name: formData.name,
+            to_name: "Sla",
+            from_email: formData.email,
+            to_email: "pietro.henriquevito@gmail.com",
+            message: formData.message,
+        }, "IYhnfK19CFOHK9uEx");
+        setIsLoading(false);
+        alert("success");
+        setFormData({name: "", email: "", message: ""})
+        } catch(error) {
+            setIsLoading(false);
+            alert("failed");   
+        }
+        
     }
   return (
     <section className='relative flex items-center c-space section-spacing'>
+        <Alert />
         <div className='flex flex-col items-center justify-center
         max-w-md p-5 mx-auto border border-white/10 rounded-2xl
         bg-primary'>
@@ -65,7 +89,9 @@ const Contact = () => {
                 </div>
                 <button type="submit" className='w-full px-1 py-3 text-lg text-center
                 rounded-md cursor-pointer bg-radial from-lavender
-                to-royal hover-animation'>Enviar</button>
+                to-royal hover-animation'>
+                    {!isLoading ? "Enviar" : "Enviando..."}
+                </button>
             </form>
         </div>
     </section>
